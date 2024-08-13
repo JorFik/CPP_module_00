@@ -1,38 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   phonebook.hpp                                      :+:      :+:    :+:   */
+/*   Contact.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: JFikents <Jfikents@student.42Heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/11 16:58:40 by JFikents          #+#    #+#             */
-/*   Updated: 2024/08/13 19:26:56 by JFikents         ###   ########.fr       */
+/*   Created: 2024/08/13 19:01:19 by JFikents          #+#    #+#             */
+/*   Updated: 2024/08/13 19:01:56 by JFikents         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHONEBOOK_HPP
-# define PHONEBOOK_HPP
+#ifndef CONTACT_HPP
+# define CONTACT_HPP
 
 #include <iostream>
-#include <iomanip>
-#include <string>
-#include "Contact.hpp"
 
-# define CONFIRM_DELETE_CONTACT "Phonebook is full, this action will replace contact "
-
-class PhoneBook
+class Contact
 {
-	private:
-		class Contact	contacts[8];
-		int				saved_contacts;
-
 	public:
-		PhoneBook();
-		~PhoneBook();
-		PhoneBook(const PhoneBook &phonebook);
-		PhoneBook &operator = (const PhoneBook &phonebook);
-		void search_contact();
-		void add_contact();
+		std::string first_name;
+		std::string last_name;
+		std::string nickname;
+		std::string phone_number;
+		std::string darkest_secret;
 };
 
 #endif

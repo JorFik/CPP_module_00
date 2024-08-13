@@ -6,11 +6,11 @@
 /*   By: JFikents <Jfikents@student.42Heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 19:13:28 by JFikents          #+#    #+#             */
-/*   Updated: 2024/08/12 19:48:42 by JFikents         ###   ########.fr       */
+/*   Updated: 2024/08/13 19:27:58 by JFikents         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "phonebook.hpp"
+#include "PhoneBook.hpp"
 
 void	clean_cin_buffer()
 {
@@ -18,30 +18,59 @@ void	clean_cin_buffer()
 	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
 
+bool	request_confirmation(std::string message)
+{
+	std::string answer;
+
+	std::cout << message << std::endl;
+	std::cout << "Do you want to continue? [y/N]: " << std::flush;
+	std::getline(std::cin, answer);
+	if (answer == "y" || answer == "Y")
+		return (true);
+	else if (answer == "N" || answer == "n")
+		return (false);
+	std::cout << "Invalid input" << std::flush;
+	return (request_confirmation(message));
+}
+
+bool	get_contact_input(std::string asked_input, std::string *contact_field)
+{
+	bool result;
+
+	std::cout << asked_input << ": " << std::flush;
+	std::getline(std::cin, *contact_field);
+	if (std::cin.eof() || contact_field->empty())
+	{
+		std::cout << "Invalid input" << std::endl;
+		std::cout << "The contact will not be saved" << std::endl;
+		result = false;
+		clean_cin_buffer();
+		return (result);
+	}
+	result = true;
+	return (result);
+}
+
 void PhoneBook::add_contact()
 {
 	const int contact_index = saved_contacts % 8;
-	std::string answer;
+	std::pair<bool, std::string> input;
 
-	if (saved_contacts >= 8)
-	{
-		std::cout << "Phonebook is full, this action will replace contact ";
-		std::cout << contact_index + 1 << std::endl;
-		std::cout << "Do you want to continue? [y/N]: ";
-		std::getline(std::cin, answer);
-		if (answer != "y")
+	if (saved_contacts >= 8
+		&& request_confirmation(CONFIRM_DELETE_CONTACT
+			+ std::to_string(contact_index + 1)))
 			return (clean_cin_buffer());
-	}
-	std::cout << "Creating new contact\n\tFirst name: " << std::flush;
-	std::getline(std::cin, contacts[contact_index].first_name);
-	std::cout << "\tLast name: " << std::flush;
-	std::getline(std::cin, contacts[contact_index].last_name);
-	std::cout << "\tNickname: " << std::flush;
-	std::getline(std::cin, contacts[contact_index].nickname);
-	std::cout << "\tPhone number: " << std::flush;
-	std::getline(std::cin, contacts[contact_index].phone_number);
-	std::cout << "\tDarkest secret: " << std::flush;
-	std::getline(std::cin, contacts[contact_index].darkest_secret);
+	std::cout << "Creating new contact" << std::endl;
+	if (!get_contact_input("\tFirst name", &contacts[contact_index].first_name))
+		return ;
+	if (!get_contact_input("\tLast name", &contacts[contact_index].last_name))
+		return ;
+	if (!get_contact_input("\tNickname", &contacts[contact_index].nickname))
+		return ;
+	if (!get_contact_input("\tPhone number", &contacts[contact_index].phone_number))
+		return ;
+	if (!get_contact_input("\tDarkest secret", &contacts[contact_index].darkest_secret))
+		return ;
 	std::cout << "Contact saved";
 	saved_contacts++;
 	clean_cin_buffer();
