@@ -83,3 +83,23 @@ void	Account::displayStatus( void ) const
 	std::cout << std::flush;
 }
 
+void	Account::makeDeposit( int deposit )
+{
+	_displayTimestamp();
+	print_in_colums("index", ':');
+	print_in_colums(std::to_string(_accountIndex), ';');
+	print_in_colums("p_amount", ':');
+	print_in_colums(std::to_string(_amount), ';');
+	print_in_colums("deposit", ':');
+	print_in_colums(std::to_string(deposit), ';');
+	_amount += deposit;
+	_totalAmount += deposit;
+	++_nbDeposits;
+	++_totalNbDeposits;
+	print_in_colums("amount", ':');
+	print_in_colums(std::to_string(_amount), ';');
+	print_in_colums("nb_deposits", ':');
+	print_in_colums(std::to_string(_nbDeposits), '\n');
+	std::cout << std::flush;
+}
+
