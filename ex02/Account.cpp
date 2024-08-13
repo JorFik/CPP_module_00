@@ -6,7 +6,7 @@
 /*   By: JFikents <Jfikents@student.42Heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 20:47:40 by JFikents          #+#    #+#             */
-/*   Updated: 2024/08/13 17:48:59 by JFikents         ###   ########.fr       */
+/*   Updated: 2024/08/13 19:39:16 by JFikents         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	Account::_displayTimestamp( void )
 	const std::tm		*local_now = std::localtime(&now);
 
 	std::strftime(time_stamp, sizeof(time_stamp), "[%Y%m%d_%H%M%S] ", local_now);
+	std::cout << time_stamp << std::flush;
 }
 
 void	print_in_colums(std::string str, unsigned char column_separator)
