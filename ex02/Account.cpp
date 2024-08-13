@@ -102,4 +102,29 @@ void	Account::makeDeposit( int deposit )
 	print_in_colums(std::to_string(_nbDeposits), '\n');
 	std::cout << std::flush;
 }
+bool	Account::makeWithdrawal( int withdrawal )
+{
+	_displayTimestamp();
+	print_in_colums("index", ':');
+	print_in_colums(std::to_string(_accountIndex), ';');
+	print_in_colums("p_amount", ':');
+	print_in_colums(std::to_string(_amount), ';');
+	print_in_colums("withdrawal", ':');
+	if (withdrawal > _amount)
+	{
+		std::cout << "refused" << std::endl;
+		return (false);
+	}
+	print_in_colums(std::to_string(withdrawal), ';');
+	_amount -= withdrawal;
+	_totalAmount -= withdrawal;
+	++_nbWithdrawals;
+	++_totalNbWithdrawals;
+	print_in_colums("amount", ':');
+	print_in_colums(std::to_string(_amount), ';');
+	print_in_colums("nb_withdrawals", ':');
+	print_in_colums(std::to_string(_nbWithdrawals), '\n');
+	std::cout << std::flush;
+	return (true);
+}
 
