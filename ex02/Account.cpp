@@ -102,6 +102,7 @@ void	Account::makeDeposit( int deposit )
 	print_in_colums(std::to_string(_nbDeposits), '\n');
 	std::cout << std::flush;
 }
+
 bool	Account::makeWithdrawal( int withdrawal )
 {
 	_displayTimestamp();
@@ -128,3 +129,27 @@ bool	Account::makeWithdrawal( int withdrawal )
 	return (true);
 }
 
+int		Account::checkAmount( void ) const
+{
+	return (_amount);
+}
+
+int		Account::getNbAccounts( void )
+{
+	return (_nbAccounts);
+}
+
+int		Account::getTotalAmount( void )
+{
+	return (_totalAmount);
+}
+
+int		Account::getNbDeposits( void )
+{
+	return (_totalNbDeposits);
+}
+
+int		Account::getNbWithdrawals( void )
+{
+	return (_totalNbWithdrawals);
+}
