@@ -47,3 +47,13 @@ Account::Account( int initial_deposit ) : _amount( initial_deposit )
 	std::cout << "created" << std::endl;
 }
 
+Account::~Account( void )
+{
+	_displayTimestamp();
+	print_in_colums("index", ':');
+	print_in_colums(std::to_string(_accountIndex), ';');
+	print_in_colums("amount", ':');
+	print_in_colums(std::to_string(_amount), ';');
+	std::cout << "closed" << std::endl;
+}
+
