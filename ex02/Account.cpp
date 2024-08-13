@@ -69,3 +69,17 @@ void	Account::displayAccountsInfos( void )
 	std::cout << "withdrawals" << std::to_string(_totalNbWithdrawals) << std::endl;
 }
 
+void	Account::displayStatus( void ) const
+{
+	_displayTimestamp();
+	print_in_colums("index", ':');
+	print_in_colums(std::to_string(_accountIndex), ';');
+	print_in_colums("amount", ':');
+	print_in_colums(std::to_string(_amount), ';');
+	print_in_colums("deposits", ':');
+	print_in_colums(std::to_string(_nbDeposits), ';');
+	print_in_colums("withdrawals", ':');
+	print_in_colums(std::to_string(_nbWithdrawals), '\n');
+	std::cout << std::flush;
+}
+
