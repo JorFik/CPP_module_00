@@ -57,3 +57,15 @@ Account::~Account( void )
 	std::cout << "closed" << std::endl;
 }
 
+void	Account::displayAccountsInfos( void )
+{
+	_displayTimestamp();
+	print_in_colums("accounts", ':');
+	print_in_colums(std::to_string(_nbAccounts), ';');
+	print_in_colums("total", ':');
+	print_in_colums(std::to_string(_totalAmount), ';');
+	print_in_colums("deposits", ':');
+	print_in_colums(std::to_string(_totalNbDeposits), ';');
+	std::cout << "withdrawals" << std::to_string(_totalNbWithdrawals) << std::endl;
+}
+
