@@ -67,7 +67,8 @@ void	Account::displayAccountsInfos( void )
 	print_in_colums(std::to_string(_totalAmount), ';');
 	print_in_colums("deposits", ':');
 	print_in_colums(std::to_string(_totalNbDeposits), ';');
-	std::cout << "withdrawals" << std::to_string(_totalNbWithdrawals) << std::endl;
+	print_in_colums("withdrawals", ':');
+	std::cout << std::to_string(_totalNbWithdrawals) << std::endl;
 }
 
 void	Account::displayStatus( void ) const
