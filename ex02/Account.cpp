@@ -28,3 +28,22 @@ void	Account::_displayTimestamp( void )
 	std::strftime(time_stamp, sizeof(time_stamp), "[%Y%m%d_%H%M%S] ", local_now);
 }
 
+void	print_in_colums(std::string str, unsigned char column_separator)
+{
+	std::cout << str << column_separator << std::flush;
+}
+
+Account::Account( int initial_deposit ) : _amount( initial_deposit )
+{
+	_displayTimestamp();
+	_accountIndex = _nbAccounts++;
+	_totalAmount += _amount;
+	_nbDeposits = 0;
+	_nbWithdrawals = 0;
+	print_in_colums("index", ':');
+	print_in_colums(std::to_string(_accountIndex), ';');
+	print_in_colums("amount", ':');
+	print_in_colums(std::to_string(_amount), ';');
+	std::cout << "created" << std::endl;
+}
+
