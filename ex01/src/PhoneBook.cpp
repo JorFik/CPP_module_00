@@ -6,7 +6,7 @@
 /*   By: JFikents <Jfikents@student.42Heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 19:13:28 by JFikents          #+#    #+#             */
-/*   Updated: 2024/08/13 19:27:58 by JFikents         ###   ########.fr       */
+/*   Updated: 2024/08/20 12:29:08 by JFikents         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,22 +33,42 @@ bool	request_confirmation(std::string message)
 	return (request_confirmation(message));
 }
 
-bool	get_contact_input(std::string asked_input, std::string *contact_field)
+enum ContactField
 {
-	bool result;
+	FIRST_NAME,
+	LAST_NAME,
+	NICKNAME,
+	PHONE_NUMBER,
+	DARKEST_SECRET
+};
 
-	std::cout << asked_input << ": " << std::flush;
-	std::getline(std::cin, *contact_field);
-	if (std::cin.eof() || contact_field->empty())
+int	get_contact_input(enum ContactField field, class Contact *contact)
+{
+	const char	*prompt[5] =
+		{"First name", "Last name", "Nickname", "Phone number", "Darkest secret"};
+	std::string user_input;
+
+	std::cout << "\t" << prompt[field] << ": " << std::flush;
+	std::getline(std::cin, user_input);
+	if (std::cin.eof() || user_input.empty())
 	{
 		std::cout << "Invalid input" << std::endl;
 		std::cout << "The contact will not be saved" << std::endl;
-		result = false;
 		clean_cin_buffer();
-		return (result);
+		contact->clear();
+		return (1);
 	}
-	result = true;
-	return (result);
+	if (field == FIRST_NAME)
+		contact->set_first_name(user_input);
+	else if (field == LAST_NAME)
+		contact->set_last_name(user_input);
+	else if (field == NICKNAME)
+		contact->set_nickname(user_input);
+	else if (field == PHONE_NUMBER)
+		contact->set_phone_number(user_input);
+	else if (field == DARKEST_SECRET)
+		contact->set_darkest_secret(user_input);
+	return (0);
 }
 
 void PhoneBook::add_contact()
@@ -61,15 +81,15 @@ void PhoneBook::add_contact()
 			+ std::to_string(contact_index + 1)))
 			return (clean_cin_buffer());
 	std::cout << "Creating new contact" << std::endl;
-	if (!get_contact_input("\tFirst name", &contacts[contact_index].first_name))
+	if (get_contact_input(FIRST_NAME, &contacts[contact_index]))
 		return ;
-	if (!get_contact_input("\tLast name", &contacts[contact_index].last_name))
+	if (get_contact_input(LAST_NAME, &contacts[contact_index]))
 		return ;
-	if (!get_contact_input("\tNickname", &contacts[contact_index].nickname))
+	if (get_contact_input(NICKNAME, &contacts[contact_index]))
 		return ;
-	if (!get_contact_input("\tPhone number", &contacts[contact_index].phone_number))
+	if (get_contact_input(PHONE_NUMBER, &contacts[contact_index]))
 		return ;
-	if (!get_contact_input("\tDarkest secret", &contacts[contact_index].darkest_secret))
+	if (get_contact_input(DARKEST_SECRET, &contacts[contact_index]))
 		return ;
 	std::cout << "Contact saved";
 	saved_contacts++;
@@ -95,9 +115,9 @@ void	print_all_contacts(Contact contacts[8], int max_contacts)
 	for (int i = 0; i < max_contacts; i++)
 	{
 		print_in_columns(std::to_string(i + 1), "|");
-		print_in_columns(contacts[i].first_name, "|");
-		print_in_columns(contacts[i].last_name, "|");
-		print_in_columns(contacts[i].nickname, "");
+		print_in_columns(contacts[i].get_first_name(), "|");
+		print_in_columns(contacts[i].get_last_name(), "|");
+		print_in_columns(contacts[i].get_nickname(), "");
 		std::cout << std::endl;
 	}
 }
@@ -122,11 +142,11 @@ void	PhoneBook::search_contact()
 	if (index < 1 || index > max_contacts)
 		return (std::cout << "Invalid index" << std::flush, clean_cin_buffer());
 	index--;
-	std::cout << "First name: " << contacts[index].first_name << "\n";
-	std::cout << "Last name: " << contacts[index].last_name << "\n";
-	std::cout << "Nickname: " << contacts[index].nickname << "\n";
-	std::cout << "Phone number: " << contacts[index].phone_number << "\n";
-	std::cout << "Darkest secret: " << contacts[index].darkest_secret;
+	std::cout << "First name: " << contacts[index].get_first_name() << "\n";
+	std::cout << "Last name: " << contacts[index].get_last_name() << "\n";
+	std::cout << "Nickname: " << contacts[index].get_nickname() << "\n";
+	std::cout << "Phone number: " << contacts[index].get_phone_number() << "\n";
+	std::cout << "Darkest secret: " << contacts[index].get_darkest_secret();
 	std::cout << std::flush;
 	clean_cin_buffer();
 }
