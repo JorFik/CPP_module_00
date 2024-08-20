@@ -77,7 +77,7 @@ void PhoneBook::add_contact()
 	std::pair<bool, std::string> input;
 
 	if (saved_contacts >= 8
-		&& request_confirmation(CONFIRM_DELETE_CONTACT
+		&& !request_confirmation(CONFIRM_DELETE_CONTACT
 			+ std::to_string(contact_index + 1)))
 			return (clean_cin_buffer());
 	std::cout << "Creating new contact" << std::endl;
